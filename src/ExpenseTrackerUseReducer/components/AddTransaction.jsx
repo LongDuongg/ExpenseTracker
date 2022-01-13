@@ -1,4 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react'
+import {setStateKey} from '../../common/react/setStateKey';
 import { globalContext } from '../Context/GlobalState';
 
 const AddTransaction = () => {
@@ -6,8 +7,7 @@ const AddTransaction = () => {
     const {state} = useContext(globalContext);
     const {addTransaction, updateTransaction} = useContext(globalContext);
 
-    const [text, setText] = useState("");
-    const [amount, setAmount] = useState(0);
+    const [transaction, setTransaction] = useState({text: "", amount: 0});
 
     useEffect(() => {
       const selectedTransaction = state.editingId !== null && (
@@ -15,41 +15,22 @@ const AddTransaction = () => {
             return transaction.id === state.editingId
         })
       );
-      setText(selectedTransaction?.text || "")
-      setAmount(selectedTransaction?.amount ?? 0)
-    }, [state.editingId, state.transactions])
-
-    const setKey = (key) => (value) => {
-        switch (key) {
-            case "text":
-                setText(value)
-                return;
-
-            case "amount":
-                setAmount(value)
-        }
-    }
+      setTransaction({
+        text: selectedTransaction?.text || "",
+        amount: selectedTransaction?.amount ?? 0,
+      })
+    }, [state.editingId, state.transactions]);
 
     const submit = () => {
 
-        if(state.editingId !== null) {
-            const newTransaction = {
-                id: state.editingId, 
-                text: text, 
-                amount: +amount
-            };
-            updateTransaction(newTransaction);
-        } else {
-            const newTransaction = {
-                id: Date.now.toString(), 
-                text: text, 
-                amount: +amount
-            };
-            addTransaction(newTransaction);
-        }
+      const newTransaction = {
+        id: state.editingId || Date.now.toString(), 
+        ...transaction,
+      };
+
+      state.editingId !== null ? updateTransaction(newTransaction) : addTransaction(newTransaction);
         
-        setText("");
-        setAmount(0);
+      setTransaction({text: "", amount: 0});
     }
 
     return (
@@ -60,8 +41,8 @@ const AddTransaction = () => {
                 <div className='form-control'>
                     <label htmlFor="text">Text</label>
                     <input 
-                        value={text} 
-                        onChange={(e) => setKey("text")(e.target.value)} 
+                        value={transaction.text} 
+                        onChange={(e) => setStateKey(transaction, setTransaction, "text", e.target.value)} 
                         placeholder='Enter Text...'
                     />
                 </div>
@@ -72,8 +53,8 @@ const AddTransaction = () => {
                     </label>
                     <input 
                         type="number" 
-                        value={amount} 
-                        onChange={(e) => setKey("amount")(e.target.value)} 
+                        value={transaction.amount} 
+                        onChange={(e) => setStateKey(transaction, setTransaction, "amount", +e.target.value)} 
                         placeholder='Enter Amount...'
                     />
                 </div>
