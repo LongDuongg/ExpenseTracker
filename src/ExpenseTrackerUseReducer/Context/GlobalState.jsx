@@ -58,6 +58,11 @@ const GlobalProvider = ({children}) => {
             }
         });
     }   
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> 4f27201261182da76d51aa362641c6873262d84f
 
     return (
         <globalContext.Provider value={{
