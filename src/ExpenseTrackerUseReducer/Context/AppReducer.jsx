@@ -11,11 +11,7 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 transactions: state.transactions.map((transaction) => {
-                    return transaction.id === state.editingId ? (
-                        transaction
-                    ) : (
-                        transaction
-                    )
+                    return transaction.id === state.editingId ? action.payload : transaction;
                 }),
                 editingId: null
             }

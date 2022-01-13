@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { globalContext } from '../Context/GlobalState';
 
 const AddTransaction = () => {
@@ -9,29 +9,28 @@ const AddTransaction = () => {
     const [text, setText] = useState("");
     const [amount, setAmount] = useState(0);
 
-    const selectedTransaction = state.editingId !== null && (
+    useEffect(() => {
+      const selectedTransaction = state.editingId !== null && (
         state.transactions.find((transaction) => {
             return transaction.id === state.editingId
         })
-    );
+      );
+      setText(selectedTransaction?.text || "")
+      setAmount(selectedTransaction?.amount ?? 0)
+    }, [state.editingId, state.transactions])
 
-    const bindingData = selectedTransaction || {
-        text: text,
-        amount: amount
-    }
-    
     const setKey = (key) => (value) => {
         switch (key) {
             case "text":
                 setText(value)
+                return;
 
             case "amount":
                 setAmount(value)
         }
     }
 
-    const submit = (e) => {
-        e.preventDefault();
+    const submit = () => {
 
         if(state.editingId !== null) {
             const newTransaction = {
@@ -54,15 +53,16 @@ const AddTransaction = () => {
     }
 
     return (
-        <Fragment>
+        <>
             <h3>Add new transaction</h3>
             <hr />
             <div className='add-form'>
                 <div className='form-control'>
                     <label htmlFor="text">Text</label>
                     <input 
-                        value={bindingData.text} 
-                        onChange={(e) => setKey("text")(e.target.value)} placeholder='Enter Text...'
+                        value={text} 
+                        onChange={(e) => setKey("text")(e.target.value)} 
+                        placeholder='Enter Text...'
                     />
                 </div>
                 <div className='form-control'>
@@ -72,15 +72,16 @@ const AddTransaction = () => {
                     </label>
                     <input 
                         type="number" 
-                        value={bindingData.amount} 
-                        onChange={(e) => setKey("amount")(e.target.value)} placeholder='Enter Amount...'
+                        value={amount} 
+                        onChange={(e) => setKey("amount")(e.target.value)} 
+                        placeholder='Enter Amount...'
                     />
                 </div>
-                <button onClick={(e) => submit(e)} className='btn'>
+                <button onClick={() => submit()} className='btn'>
                     Add transaction
                 </button>
             </div>
-        </Fragment>
+        </>
     )
 }
 
