@@ -8,17 +8,10 @@ const TransactionList = () => {
 
     const transactionList = state.searchText ? (
         state.transactions.filter((t) => {
-<<<<<<< HEAD
             return t.text.toLowerCase().includes(state.searchText.toLowerCase())
         })) : (
             state.transactions
         );
-=======
-            return t.text.toLowerCase().includes(state.searchText.toLowerCase());
-    })) : (
-        state.transactions
-    );
->>>>>>> 4f27201261182da76d51aa362641c6873262d84f
     
     return (
         <Fragment>
