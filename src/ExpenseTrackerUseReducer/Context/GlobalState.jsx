@@ -58,8 +58,6 @@ const GlobalProvider = ({children}) => {
             }
         });
     }   
-    
-    
 
     return (
         <globalContext.Provider value={{
