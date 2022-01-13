@@ -6,15 +6,29 @@ const AddTransaction = () => {
     const {state} = useContext(globalContext);
     const {addTransaction, updateTransaction} = useContext(globalContext);
 
+    const [text, setText] = useState("");
+    const [amount, setAmount] = useState(0);
+
     const selectedTransaction = state.editingId !== null && (
         state.transactions.find((transaction) => {
             return transaction.id === state.editingId
         })
     );
-    //console.log(selectedTransaction);
 
-    const [text, setText] = useState(null || selectedTransaction.text);
-    const [amount, setAmount] = useState(null || selectedTransaction.amount);
+    const bindingData = selectedTransaction || {
+        text: text,
+        amount: amount
+    }
+    
+    const setKey = (key) => (value) => {
+        switch (key) {
+            case "text":
+                setText(value)
+
+            case "amount":
+                setAmount(value)
+        }
+    }
 
     const submit = (e) => {
         e.preventDefault();
@@ -47,8 +61,8 @@ const AddTransaction = () => {
                 <div className='form-control'>
                     <label htmlFor="text">Text</label>
                     <input 
-                        value={text} 
-                        onChange={(e) => setText(e.target.value)} placeholder='Enter Text...'
+                        value={bindingData.text} 
+                        onChange={(e) => setKey("text")(e.target.value)} placeholder='Enter Text...'
                     />
                 </div>
                 <div className='form-control'>
@@ -58,11 +72,13 @@ const AddTransaction = () => {
                     </label>
                     <input 
                         type="number" 
-                        value={amount} 
-                        onChange={(e) => setAmount(e.target.value)} placeholder='Enter Amount...'
+                        value={bindingData.amount} 
+                        onChange={(e) => setKey("amount")(e.target.value)} placeholder='Enter Amount...'
                     />
                 </div>
-                <button onClick={(e) => submit(e)} className='btn'>Add transaction</button>
+                <button onClick={(e) => submit(e)} className='btn'>
+                    Add transaction
+                </button>
             </div>
         </Fragment>
     )
