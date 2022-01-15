@@ -1,12 +1,22 @@
-
-import React from 'react'
-import {sum} from '../common/utils/collections';
+import './ExpenseTrackerUseState.css';
+import React from 'react';
+import { Header } from './components/Header';
+import { Balance } from './components/Balance';
+import { TransactionList } from './components/TransactionList';
+import { AddTransaction } from './components/AddTransaction';
+import { GlobalContext } from './context/GlobalContext';
+import { SearchTransaction } from './components/SearchTransaction';
 
 export const ExpenseTrackerUseState = () => {
-  const arr = [1,2,3,4];
   return (
-    <div>
-      expense tracker use state {sum(arr)}
-    </div>
+    <GlobalContext>
+      <div className='app'>
+        <Header/>
+        <Balance/>
+        <SearchTransaction/>
+        <TransactionList/>
+        <AddTransaction/>
+      </div>
+    </GlobalContext>
   )
 }

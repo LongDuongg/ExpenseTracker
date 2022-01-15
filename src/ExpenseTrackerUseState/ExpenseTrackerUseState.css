@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #e8edeb;
+}
+
+.app {
+  border: 2px solid steelblue;
+  max-width: 500px;
+  min-height: 300px;
+  border-radius: 5px;
+  margin: 30px auto;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px;
+}
+
+.balance-income {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 15px;
+}
+
+.balance {
+  margin-top: 8px;
+}
+
+.balance p {
+  font-size: 20px;
+  margin: 5px 30px;
+}
+
+.inc-exp-tracker {
+  display: flex;
+  font-size: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.money {
+  margin: 0px 10px;
+}
+
+.money p {
+  margin-left: 10px;
+}
+
+.money.plus {
+  color: green;
+  border-right: 3px solid black;
+  padding-right: 30px;
+  margin-left: 30px;
+}
+
+.money.minus {
+  color: red;
+  margin-left: 30px;
+}
+
+.list {
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  margin: 16px;
+  padding: 9px;
+}
+
+.add-form {
+  margin: 15px;
+}
+
+.form-control {
+  margin: 6px 0px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input {
+  margin: 5px 0px;
+  padding: 5px;
+  border-radius: 9px;
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  padding: 7px;
+  font-size: 17px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  background-color: green;
+  cursor: pointer;
+}

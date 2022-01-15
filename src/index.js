@@ -7,8 +7,8 @@ import {ExpenseTrackerUseState} from './ExpenseTrackerUseState/ExpenseTrackerUse
 
 ReactDOM.render(
   <React.StrictMode>
-    <ExpenseTrackerApp />
-    {/* <ExpenseTrackerUseState /> */}
+    {/* <ExpenseTrackerApp /> */}
+    <ExpenseTrackerUseState />
   </React.StrictMode>,
   document.getElementById('root')
 );

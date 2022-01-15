@@ -7,7 +7,6 @@ const IncomeExpenses = () => {
     const {state} = useContext(globalContext);
     const amount = state.transactions.map((t) => {return t.amount});
     
-    // need to check again
     const income = sum(amount.filter((mount) => {return mount > 0}));
 
     const expense = sum(amount.filter((mount) => {return mount < 0}));

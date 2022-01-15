@@ -28,7 +28,11 @@ const AddTransaction = () => {
         ...transaction,
       };
 
-      state.editingId !== null ? updateTransaction(newTransaction) : addTransaction(newTransaction);
+      state.editingId !== null ? (
+        updateTransaction(newTransaction)
+      ) : (
+        addTransaction(newTransaction)
+      );
         
       setTransaction({text: "", amount: 0});
     }
