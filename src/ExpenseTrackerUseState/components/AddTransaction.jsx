@@ -36,24 +36,24 @@ export const AddTransaction = () => {
   return (
     <div className='add-form'>
       <div className='form-control'>
-          <label htmlFor="text">Text</label>
-          <input 
-            value={transaction.text} 
-            onChange={(e) => setStateKey(transaction, setTransaction, "text", e.target.value)} 
-            placeholder='Enter Text...'
-          />
+        <label htmlFor="text">Text</label>
+        <input 
+          value={transaction.text} 
+          onChange={(e) => setStateKey(transaction, setTransaction, "text", e.target.value)} 
+          placeholder='Enter Text...'
+        />
       </div>
       <div className='form-control'>
-          <label htmlFor="amount">
-              Amount <br/>
-              (negative - expense, positive - income)
-          </label>
-          <input 
-            type="number" 
-            value={transaction.amount} 
-            onChange={(e) => setStateKey(transaction, setTransaction, "amount", +e.target.value)} 
-            placeholder='Enter Amount...'
-          />
+        <label htmlFor="amount">
+            Amount <br/>
+            (negative - expense, positive - income)
+        </label>
+        <input 
+          type="number" 
+          value={transaction.amount} 
+          onChange={(e) => setStateKey(transaction, setTransaction, "amount", +e.target.value)} 
+          placeholder='Enter Amount...'
+        />
       </div>
       <button onClick={() => submit()} className='btn'>
           Add transaction
