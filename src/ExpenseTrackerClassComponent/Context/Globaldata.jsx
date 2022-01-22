@@ -7,13 +7,13 @@ const initialState = {
     {id: "3", text: "Book", amount: -10},
     {id: "4", text: "Camera", amount: 150},
   ],
-  transaction:'',
   searchText: '',
   editingId: null 
 };
 
 export const DBContext = createContext(initialState);
 export const Consumer = DBContext.Consumer;
+
 export default class Globaldata extends Component {
 
   constructor(props) {
@@ -35,7 +35,6 @@ export default class Globaldata extends Component {
       transactions: this.state.transactions.map((transaction) => {
         return transaction.id === this.state.editingId ? newTransaction : transaction
       }),
-      transaction:'',
       editingId: null
     });
   }
@@ -43,9 +42,6 @@ export default class Globaldata extends Component {
   chooseTransaction = (id) => {
     this.setState({
       ...this.state,
-      transaction: this.state.transactions.find((transaction) => {
-        return transaction.id === id
-      }),
       editingId: id
     });
   }

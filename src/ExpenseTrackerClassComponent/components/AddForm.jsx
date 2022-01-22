@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { DBContext, Consumer } from '../Context/Globaldata'
+import { DBContext } from '../Context/Globaldata'
 import {setKey} from '../../common/utils/objects'
+import {bindInput, bindNumberInput} from '../../common/react/bindInput';
 
 export default class AddForm extends Component {
   
@@ -10,27 +11,22 @@ export default class AddForm extends Component {
     super(props)
     
     this.state = {
-      text: '',
-      amount: 0
-    }
+      text: null,
+      amount: null,
+    };
   }
 
-  componentDidUpdate = (preProp, preState, snapShot) => {
+  componentDidUpdate = (prevProp, prevState, snapShot) => {
     const {state} = this.context;
-    if(preState.text !== state.transaction.text && preState.amount !== state.transaction.amount) {
-      this.setState({
-        text: state.transaction.text,
-        amount: state.transaction.amount
-      });
+    if (this.context.state.editingId && this.context.state.editingId !== prevState.id) {
+      const transaction = state.transactions.find((t) => t.id === state.editingId);
+      this.setState(transaction);
     }
-  }
-
-  setStateKeyClass = (state, key, value) => {
-    this.setState(setKey(state, key, value))
   }
 
   submit = () => {
-    const {state,updateTransaction,addTransaction} = this.context;
+    const {state, updateTransaction, addTransaction} = this.context;
+
     const transaction = {
       id: state.editingId || Date.now.toString(), 
       ...this.state
@@ -41,7 +37,7 @@ export default class AddForm extends Component {
     ) : (
       addTransaction(transaction)
     );
-    this.setState({text: '', amount: 0});
+    this.setState({text: null, amount: null});
   }
 
   render() {
@@ -52,23 +48,27 @@ export default class AddForm extends Component {
       <div className='add-form'>
         <div className='form-control'>
           <label htmlFor="text">Text</label>
-          <input 
-            value={state.text}
-            onChange={(e) => this.setStateKeyClass(state, "text", e.target.value)}
-            placeholder='Enter Text...'
-          />
+          <input {...{
+            ...bindInput({
+              value: state.text,
+              onChange: (v) => this.setState(setKey(state, "text", v)),
+            }),
+            placeholder: 'Enter Text...'
+          }}/>
         </div>
         <div className='form-control'>
           <label htmlFor="amount">
             Amount <br/>
             (negative - expense, positive - income)
           </label>
-          <input 
-            type="number" 
-            value={state.amount}
-            onChange={(e) => this.setStateKeyClass(state, "amount", +e.target.value)}
-            placeholder='Enter Amount...'
-          />
+          <input {...{
+            type: "number",
+            ...bindNumberInput({
+              value: state.amount,
+              onChange: (v) => this.setState(setKey(state, "amount", v)),
+            }),
+            placeholder: 'Enter Amount...'
+          }}/>
         </div>
         <button onClick={() => this.submit()} className='btn'>
           Add transaction
