@@ -48,14 +48,12 @@ export default class AddForm extends Component {
       <div className='add-form'>
         <div className='form-control'>
           <label htmlFor="text">Text</label>
-          <input 
-            {
-              ...{...bindInput({
+          <input {...{
+            ...bindInput({
               value: state.text,
               onChange: (v) => this.setState(setKey(state, "text", v)),
             }),
             placeholder: 'Enter Text...' 
-            
           }}/>
         </div>
         <div className='form-control'>

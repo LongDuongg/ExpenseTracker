@@ -5,23 +5,24 @@ import { setStateKey } from '../../common/react/setStateKey';
 
 export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
 
-  const [transaction, setTransaction] = useState({
-    text: null,
-    amount: null
-  });
+  const [transaction, setTransaction] = useState();
   
-  useEffect(() => {
-    const seletedTransaction = editingID !== null && (
-      transactions.find((transaction) => {
-        return transaction.id === editingID
+  useEffect(
+    () => {
+      const seletedTransaction = editingID !== null && (
+        transactions.find((transaction) => {
+          return transaction.id === editingID
+        })
+      )
+  
+      setTransaction({
+        text: seletedTransaction?.text,
+        amount: seletedTransaction?.amount
       })
-    )
-
-    setTransaction({
-      text: seletedTransaction?.text || null,
-      amount: seletedTransaction?.amount || null
-    })
-  }, [transactions, editingID])
+    }, 
+    // eslint-disable-next-line
+    [editingID]
+  )
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -34,10 +35,7 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
     ) : (
       onUpdate(newTransaction)
     )
-    setTransaction({
-      text: null,
-      amount: null
-    }) 
+    setTransaction(null) 
   }
 
   return (
@@ -48,7 +46,7 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
           {
             ...{
               ...bindInput({
-                value: transaction.text,
+                value: transaction?.text,
                 onChange: (v) => setTransaction(setKey(transaction,"text", v))
               }),
               placeholder:'Enter Text...'
@@ -65,7 +63,7 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
           {
             ...{
               ...bindNumberInput({
-                value: transaction.amount,
+                value: transaction?.amount,
                 onChange: (v) => setTransaction(setKey(transaction,"amount", v))
               }),
               type:"number", 
