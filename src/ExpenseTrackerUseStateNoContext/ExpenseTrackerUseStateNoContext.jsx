@@ -62,7 +62,10 @@ export const ExpenseTrackerUseStateNoContext = () => {
     <div className='app'>
       <Header/>
       <Balance balance={data.transactions}/>
-      <SearchTransaction onSearch={searchTransaction}/>
+      <SearchTransaction 
+        searchText={data.searchText} 
+        onSearch={searchTransaction}
+      />
       <TransactionList 
         data={data.transactions} 
         searchText={data.searchText}

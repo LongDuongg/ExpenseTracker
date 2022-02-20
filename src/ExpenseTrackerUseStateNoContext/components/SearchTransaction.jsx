@@ -1,20 +1,20 @@
 import React from 'react';
-import {bindOnChangeInput} from '../../common/react/bindInput'
-export const SearchTransaction = ({onSearch}) => {
+import {bindInput} from '../../common/react/bindInput'
+
+export const SearchTransaction = ({searchText, onSearch}) => {
   return (
     <div className='add-form'>
       <div className='form-control'>
         <label htmlFor="search">Search</label>
-        <input
-          {
-            ...{
-              ...bindOnChangeInput({
-                onChange: (e) => onSearch(e),
-              }),
-              placeholder: 'Search for Transaction...'
-            }
-          }         
-        />
+
+        <input {...{
+          ...bindInput({
+            value: searchText,
+            onChange: (v) => onSearch(v),
+          }),
+          placeholder: 'Search for Transaction...'
+        }}/>
+
       </div>
     </div>
   );
