@@ -9,7 +9,7 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
   
   useEffect(
     () => {
-      const seletedTransaction = editingID !== null && (
+      const seletedTransaction = editingID != null && (
         transactions.find((transaction) => {
           return transaction.id === editingID
         })
@@ -24,13 +24,12 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
     [editingID]
   )
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     const newTransaction = {
       id: editingID || Date.now.toString(),
       ...transaction
     }
-    editingID === null ? (
+    editingID == null ? (
       onAdd(newTransaction)
     ) : (
       onUpdate(newTransaction)
@@ -72,7 +71,7 @@ export const AddTransaction = ({onAdd, onUpdate, editingID, transactions}) => {
           }
         />
       </div>
-      <button className='btn' onClick={(e) => onSubmit(e)}>
+      <button className='btn' onClick={onSubmit}>
           Add transaction
       </button>
     </div>
